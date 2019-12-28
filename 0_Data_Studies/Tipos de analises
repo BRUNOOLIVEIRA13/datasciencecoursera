@@ -1,0 +1,27 @@
+TIPOS DE ANALISES
+
+1) DESCRITIVA:
+Analise inicial que descreve de forma generalista os dados. É diferente de fazer uma interpretação dos dados. Somatoria de dados genericos por exemplo 
+
+
+2) EXPLORATORIA: permite formular hipoteses sobre os assuntos. Como diferentes dados estão as vezes correlacionados, mas não são causais. Uma não causa uma outra. Apenas tem uma conexão. Formula hipoteses.
+
+3) INFERÊNCIAL: Depende das variaveis para saber a acuracidade dos Dados. Utiliza uma pequena amostra de dados para dizer algo. Utiliza geralmente uma amostra de uma população para inferir algo.
+
+4) PREDITIVA: Utiliza geralmente o histórico aliado a modelos tradicionais estatisticos e machine learning para efetuar as análises. Porém, não é por que uma variavel pode predizer outra que ela CAUSA a outra.
+
+5) CAUSAL: É a analise que é feita para analisar o que ocorre com uma variavel quando manipulamos outra. Tentativa via causa-efeito. 
+
+6) DETERMINISTICA: TEORIAS QUE EXPLICAM FENOMENOS FISICOS, mensurar erros e reduzir falhas ou efeitos indesejados manipulando variaveis. Utilizado em analises cientificas, de engenharia, estudos de materiais.
+
+
+====== EXPERIMENTAL DESING THINKING ===========
+
+1) Formular uma questão (em qualquer coleta de dados)
+2) Desenhar o experimento desejado
+3) Identificar os problemas e as fontes de erros
+4) Coletar dados
+5) Levantar hipoteses: Qual é o resultado esperado deste experimento? Tem correlação de dados? Um interfere no outro?(analisar variaveis dependentes que mudam em decorrência de variaveis indepentendes)
+6) Olhar amostras e testar
+7) Tem algum fator externo que influencia ambas as variaveis olhadas? Exemplo se voce esta analisando compra de sapato por crianças anual. A idade é uma variavel externa que influencia, pois conforme passa os anos vai se mudando.
+8) Neste caso podemos pegar pessoas da mesma idade ou pegar uma idade media. Com grupos controlados.  
