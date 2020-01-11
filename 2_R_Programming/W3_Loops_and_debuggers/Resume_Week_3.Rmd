@@ -1,0 +1,179 @@
+---
+title: "WEEK 3 - WHAT SHOULD I HAVE IN MIND"
+author: "Bruno H M Oliveira"
+date: "01/01/2020 to 11/01/2020"
+output: html_document
+---
+---
+Resumo
+---
+
+#### Loop functions: lapply, apply, tapply, split, mapply
+
+***
+##### The Split-Apply-Combine Strategy for Data Analysis
+
+***
+
+```{R = lapply}
+str(lapply)
+```
+* Função ``` lapply``` aplicavel se você tem uma lista de objetos e quer fazer um loop sobre a lista de objetos e aplicar uma função a todos os elementos da lista. Aplica uma função a argumentos e retorna a função aplicada em formato de LISTA, se não for lista, converte.
+
+*** 
+```{R = sapply}
+str(sapply)
+```
+* Função ``` sapply ``` é uma variante de lapply que simplifica o resultado, se o resultado tiver dimensão = 1, retorna um vetor, se for todos resultados dimensão > 1, retorna uma matriz, e se for variado, retorna uma lista.
+
+*** 
+```{R = apply}
+str(apply)
+```
+* A função ``` apply ``` é uma função que opera sobre as margens (i, j) de uma matriz. É bastante útil se você quer sumarizar uma matriz ou arrays com mais dimensões.
+
+``` rowSums = apply(x, 1, sum) // rowMeans // colSums // colMeans ```
+
+* São atalhos mais rápidos para aplicar 'apply' em matrizes
+
+***
+```{R = tapply}
+str(tapply)
+```
+* Função ``` tapply ``` aplica uma função a subconjuntos de um vetor ou tabela 
+
+***
+```{R = split}
+str(split)
+```
+* Função ``` split ```  não é uma função de loop, mas é uma função bem útil que pode ser usada em conjunto com funções como lapply ou sapply, pois sempre retorna uma lista. Pega vetores ou outros objetos e separa em determinados grupos por fatores ou lista de fatores.
+
+***
+```{R = mapply}
+str(mapply)
+```
+* Função ``` mapply ``` é a versão para multivariaveis de lapply e sapply, que aplica a função em paralelo aos diferentes argumentos/ listas declaradas. Pode ser usada também para vetorizar uma função.
+
+***
+QUIZ WEEK 3
+---
+
+
+1. Como fazer média de uma coisa por outra? one thing by other
+
++ Exemplo: Média de 'Sepal.Length' pela 'species' = virginica? 
+
+```
+library(data.table)
+iris_specmean <- as.data.table(iris)
+iris_specmean[Species == "virginica", round(mean(Sepal.Length))]
+```
+
+***
+2. Como fazer média de varias variaveis dentro de um dataset?
+
++ Exemplo:  média das variables 'Sepal.Length', 'Sepal.Width', 'Petal.Length', and 'Petal.Width'?
+
+```
+apply(iris[, 1:4], 2, mean)
+```
+
+*** 
+
+3. Como fazer a diferença entre duas médias (média de uma coisa por outra)?
+
++ Diferença entre média HP de 4cyl e HP de um 8cyl? Arredondado.
+
+```
+mtcars_dt <- as.data.table(mtcars)
+mtcars_dt <- mtcars_dt[,  .(mean_cols = mean(hp)), by = cyl]
+round(abs(mtcars_dt[cyl == 4, mean_cols] - mtcars_dt[cyl == 8, mean_cols]))
+```
+***
+
+4. O que ```debug(ls) ``` faz?
+
++ Descobrem o que tem de errado depois de compilar um código.
++ Pode ser uma: mensagem, warning, error or condition.
++ Execution of 'ls' will suspend at the beginning of the function and you will be in the browser.
+
+***
+#### Projeto 1: Escrever uma função capaz de armazenar em cache cálculos potencialmente demorados. Por exemplo, calcular a média de um vetor numérico, armazenar no cache e retornar ele sem precisar fazer os cálculos novamente
+
+```
+makeVector <- function(x = numeric()) {
+        m <- NULL
+        set <- function(y) {
+                x <<- y
+                m <<- NULL
+        }
+        get <- function() x
+        setmean <- function(mean) m <<- mean
+        getmean <- function() m
+        list(set = set, get = get,
+             setmean = setmean,
+             getmean = getmean)
+}
+cachemean <- function(x, ...) {
+        m <- x$getmean()
+        if(!is.null(m)) {
+                message("getting cached data")
+                return(m)
+        }
+        data <- x$get()
+        m <- mean(data, ...)
+        x$setmean(m)
+        m
+}
+```
+
+***
+#### Projeto 2: Armazenar o inverso de uma Matrix (Caching the Inverse of a Matrix)
+
+This Function will set and get "special matrix" Works similar to Create Vector, but insted of get a Mean of a Vector We will get a inverse of a matrix with lexical scope help.
+
+```
+makeCacheMatrix <- function(m = matrix()) {
+        inv <- NULL
+        set <- function(x){
+                m <<- x
+                inv <<- NULL
+        }
+        get <- function() m
+        setinverse <- function(solve) inv <<- solve
+        getinverse <- function() inv
+        list(set = set, get = get,
+             setinverse = setinverse,
+             getinverse = getinverse)
+}
+```
+
+This function will see if already exist the matrix (and the matrix has not chagend) and the should retrive the inverse from the matrix.
+
+```
+cacheSolve <- function(x, ...) {
+        ## Return a matrix that is the inverse of 'x'
+        inv <- x$getinverse()
+        if(!is.null(inv)) {
+                message("getting cached data")
+                return(inv)
+        }
+        
+        data <- x$get()
+        inv <- solve(data, ...)
+        x$setinverse(inv)
+        inv
+}
+```
+
+> You can test using: 
+
+```
+m1 <- matrix(c(1/2, -1/4, -1, 3/4), nrow = 2, ncol = 2)
+matrix_obj <- makeCacheMatrix(m1)
+cachesolve(matrix_obj)
+m2 <- matrix(c(5/8, -1/8, -7/8, 3/8), nrow = 2, ncol = 2)
+matrix_obj$set(m2)
+cacheSolve(matrix_obj)
+```
+
