@@ -1,0 +1,67 @@
+Instruções - Project 1
+
+# O arquivo zip contém 332 arquivos de valor separado por vírgula (CSV), contendo dados de monitoramento de poluição para a poluição do ar de partículas finas (PM) em 332 localidades nos Estados Unidos. Cada arquivo contém dados de um único monitor e o número de identificação de cada monitor está contido no nome do arquivo. Por exemplo, os dados para o monitor 200 estão contidos no arquivo "200.csv". Cada arquivo contém três variáveis:
+
+- Date: a data da observação no formato AAAA-MM-DD (ano-mês-dia)
+- sulfate: o nível de sulfato de PM no ar nessa data (medido em microgramas por metro cúbico)
+- nitrate: o nível de nitrato PM no ar nessa data (medido em microgramas por metro cúbico)
+
+Parte 1
+
+## Escreva uma função chamada 'pollutantmean' que calcule a média de um poluente (sulfato ou nitrato) em uma lista especificada de monitores. A função 'pollutantmean' usa três argumentos: 'directory', 'pollutant' e 'id'. Dados os números de identificação do monitor vetorial, 'pollutantmean' lê que monitora os dados de material particulado do diretório especificado no argumento 'directory' e retorna a média do poluente em todos os monitores, ignorando quaisquer valores ausentes codificados como NA. Um protótipo da função é o seguinte.
+
+pollutantmean <- function(directory, pollutant, id = 1:332){
+	 'diretório' é um vetor de caracteres de comprimento 1, indicando a localização dos arquivos CSV
+
+	 'poluente' é um vetor de caracteres de comprimento 1, indicando o nome do poluente para o qual calcularemos a média; "sulfato" ou "nitrato"
+
+	 'id' é um vetor inteiro indicando os números de identificação do monitor a serem usados
+
+	 Retorne a média do poluente em toda a lista de monitores no vetor 'id' (ignorando os valores de NA).
+}
+
+Parte 2
+
+# Escreva uma função que leia um diretório cheio de arquivos e relate o número de casos completamente observados em cada arquivo de dados (complete.cases). A função deve retornar um quadro de dados em que a primeira coluna é o nome do arquivo e a segunda coluna é o número de casos completos (complete.cases). Um protótipo dessa função segue:
+
+complete <- function(directory, id = 1:332){
+	 'diretório' é um vetor de caracteres de comprimento 1, indicando a localização dos arquivos CSV
+	 'id' é um vetor inteiro indicando os números de identificação do monitor a serem usados
+	 
+	 Returnar um quadro de dados (data frame) na forma:
+	 id nobs
+	 1  117
+	 2  1041
+	 
+	 Onde 'id' é o número de identificação do monitor e 'nobs' é o número de casos completos (complete.cases)
+}
+
+
+Parte 3
+
+# Escreva uma função que utilize um diretório de arquivos de dados e um limite (threshold) para casos completos e calcule a correlação entre sulfato e nitrato para locais de monitor onde o número de casos completamente observados (em todas as variáveis) é maior que o limite. A função deve retornar um vetor de correlações para os monitores que atendem ao requisito de limite. Se nenhum monitor atender ao requisito de limite, a função deve retornar um vetor numérico de comprimento 0. Um protótipo dessa função segue
+
+
+corr <- function(directory, threshold = 0){
+	 'diretório' é um vetor de caracteres de comprimento 1, indicando a localização dos arquivos CSV
+	 'threshold/limite' é um vetor numérico de comprimento 1, indicando o número de observações completamente observadas (em todas as variáveis) necessárias para calcular a correlação entre nitrato e sulfato; o padrão é 0.
+	 Retornar um vetor numérico de correlação
+}
+
+# Para esta função, você precisará usar a função 'cor' em R, que calcula a correlação entre dois vetores. Por favor, leia a página de ajuda para esta função via '? Cor' e verifique se você sabe como usá-la.
+
+
+pollutantmean (...) {
+
+    # obter lista de arquivos de sensores no diretório specdata
+
+    # criar um data.frame vazio
+
+    # lista de subconjuntos de arquivos de sensores
+
+    # percorre os arquivos na lista de subconjuntos e
+    # * leia o arquivo csv
+    # * vincular ao data.frame "coletor"
+
+    # calcular média e retornar ao ambiente
+}
